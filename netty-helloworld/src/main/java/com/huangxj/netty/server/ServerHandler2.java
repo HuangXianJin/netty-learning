@@ -1,20 +1,22 @@
 package com.huangxj.netty.server;
 
 
-import io.netty.channel.*;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.net.InetAddress;
 import java.util.Date;
 
 /**
- * @ClassName ServerHandler
+ * @ClassName ServerHandler2
  * @Description TODO
  * @Author: huangxj
  * @Create: 2020-03-11 11:36
  * @Version V1.0
  **/
 @ChannelHandler.Sharable
-public class ServerHandler extends SimpleChannelInboundHandler<String> {
+public class ServerHandler2 extends SimpleChannelInboundHandler<String> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         // 为新连接发送庆祝
@@ -25,23 +27,12 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, String request) throws Exception {
-        // Generate and write a response.
         String response;
-        boolean close = false;
-        if (request.isEmpty()) {
-            response = "Please type something.\r\n";
-        } else if ("bye".equals(request.toLowerCase())) {
-            response = "Have a good day!\r\n";
-            close = true;
-        } else {
-            response = "Did you say '" + request + "'?\r\n";
-        }
+        System.out.println("this is server2");
+        response = "did you say "+request + "\n";
+        // ctx.fireChannelRead(response);
+        ctx.writeAndFlush(response);
 
-        ChannelFuture future = ctx.write(response);
-
-        if (close) {
-            future.addListener(ChannelFutureListener.CLOSE);
-        }
     }
 
     @Override

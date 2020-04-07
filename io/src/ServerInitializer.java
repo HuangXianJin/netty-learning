@@ -1,5 +1,3 @@
-package com.huangxj.netty.server;
-
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -18,7 +16,6 @@ import io.netty.handler.codec.string.StringEncoder;
 public class ServerInitializer extends ChannelInitializer<SocketChannel> {
     private static final StringDecoder DECODER = new StringDecoder();
     private static final StringEncoder ENCODER = new StringEncoder();
-    private static final ServerHandler2 serverHandler2 = new ServerHandler2();
     private static final ServerHandler1 serverHandler1 = new ServerHandler1();
 
     @Override
@@ -31,6 +28,5 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast(ENCODER);
         // 业务逻辑实现类
         pipeline.addLast(serverHandler1);
-        pipeline.addLast(serverHandler2);
     }
 }
